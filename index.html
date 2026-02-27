@@ -60,8 +60,8 @@
             <!-- Flat Drawing -->
             <div class="prompt-card bg-white p-6 rounded-xl border border-slate-200 flex flex-col justify-between" data-category="flat">
                 <div>
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded uppercase">線画（平絵）作成</span>
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="bg-blue-100 text-blue-700 text-base font-bold px-3 py-1 rounded uppercase tracking-wide">線画（平絵）作成</span>
                         <!-- T-shirt Icon -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 4L4 7V10H6V20H18V10H20V7L17 4H14C14 5.10457 13.1046 6 12 6C10.8954 6 10 5.10457 10 4H7Z" />
@@ -104,8 +104,8 @@
             <!-- Flat Lay -->
             <div class="prompt-card bg-white p-6 rounded-xl border border-slate-200 flex flex-col justify-between" data-category="product">
                 <div>
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded uppercase">平置き・物撮り</span>
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="bg-green-100 text-green-700 text-base font-bold px-3 py-1 rounded uppercase tracking-wide">平置き・物撮り</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                         </svg>
@@ -135,9 +135,9 @@
                 <div>
                     <div class="flex justify-between items-end mb-1">
                         <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">プロンプト編集</label>
-                        <button onclick="resetPrompt('product')" class="text-[10px] text-green-500 hover:text-green-700 font-bold transition-colors">リセット</button>
+                        <button onclick="resetPrompt('product')" class="text-[10px] text-blue-500 hover:text-blue-700 font-bold transition-colors">リセット</button>
                     </div>
-                    <textarea id="display-product" class="w-full bg-slate-50 p-3 rounded border border-slate-100 mb-4 h-64 text-[10px] text-slate-600 leading-normal focus:bg-white focus:ring-1 focus:ring-green-200 outline-none resize-none transition-all"></textarea>
+                    <textarea id="display-product" class="w-full bg-slate-50 p-3 rounded border border-slate-100 mb-4 h-64 text-[10px] text-slate-600 leading-normal focus:bg-white focus:ring-1 focus:ring-blue-200 outline-none resize-none transition-all"></textarea>
                     <button onclick="handleCopy('product')" class="w-full bg-[#18ABA0] hover:opacity-90 text-white py-2.5 rounded-lg font-medium transition-all flex items-center justify-center gap-2">
                         <span>プロンプトをコピー</span>
                     </button>
@@ -147,8 +147,8 @@
             <!-- Fabric Texture (Pattern Graphic) -->
             <div class="prompt-card bg-white p-6 rounded-xl border border-slate-200 flex flex-col justify-between" data-category="fabric">
                 <div>
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="bg-purple-100 text-purple-700 text-xs font-bold px-2 py-1 rounded uppercase">柄グラフィック抽出</span>
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="bg-purple-100 text-purple-700 text-base font-bold px-3 py-1 rounded uppercase tracking-wide">柄グラフィック抽出</span>
                         <!-- Pattern/Fabric Icon -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
@@ -179,7 +179,7 @@
                 <div>
                     <div class="flex justify-between items-end mb-1">
                         <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">プロンプト編集</label>
-                        <button onclick="resetPrompt('fabric')" class="text-[10px] text-purple-500 hover:text-purple-700 font-bold transition-colors">リセット</button>
+                        <button onclick="resetPrompt('fabric')" class="text-[10px] text-blue-500 hover:text-blue-700 font-bold transition-colors">リセット</button>
                     </div>
                     <textarea id="display-fabric" class="w-full bg-slate-50 p-3 rounded border border-slate-100 mb-4 h-64 text-[10px] text-slate-600 leading-normal focus:bg-white focus:ring-1 focus:ring-purple-200 outline-none resize-none transition-all"></textarea>
                     <button onclick="handleCopy('fabric')" class="w-full bg-[#18ABA0] hover:opacity-90 text-white py-2.5 rounded-lg font-medium transition-all flex items-center justify-center gap-2">
@@ -191,8 +191,8 @@
             <!-- Inspiration Section -->
             <div class="prompt-card bg-white p-6 rounded-xl border border-slate-200 flex flex-col justify-between" data-category="model">
                 <div>
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="bg-orange-100 text-orange-700 text-xs font-bold px-2 py-1 rounded uppercase">インスピレーション</span>
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="bg-orange-100 text-orange-700 text-base font-bold px-3 py-1 rounded uppercase tracking-wide">インスピレーション</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                         </svg>
