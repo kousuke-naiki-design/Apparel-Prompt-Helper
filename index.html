@@ -32,12 +32,6 @@
             background-color: #cbd5e1;
             border-radius: 20px;
         }
-        .image-preview {
-            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23cbd5e1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 24px;
-        }
         .scrollbar-thin::-webkit-scrollbar {
             width: 4px;
         }
@@ -85,9 +79,9 @@
                         </svg>
                     </div>
 
-                    <div class="mb-4 flex gap-4">
-                        <div class="flex-1 space-y-2">
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">対象アイテムの指定</label>
+                    <div class="mb-4 space-y-2">
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">対象アイテムの指定</label>
+                        <div class="flex flex-col gap-2">
                             <select id="itemSelect-flat" onchange="updateItemFromSelect('flat')" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2">
                                 <option value="">アイテムを選択</option>
                                 <option value="セーター">セーター</option>
@@ -102,13 +96,6 @@
                                 <option value="Tシャツ">Tシャツ</option>
                             </select>
                             <input type="text" id="customItem-flat" oninput="updateSpecificPrompt('flat')" placeholder="自由入力 (例: トレンチコート)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2">
-                        </div>
-                        <div class="w-24">
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 text-center">参考画像</label>
-                            <div onclick="document.getElementById('file-flat').click()" class="image-preview w-full h-20 rounded-lg border-2 border-dashed border-slate-200 cursor-pointer overflow-hidden flex items-center justify-center bg-slate-50 hover:bg-slate-100">
-                                <img id="img-flat" class="hidden w-full h-full object-cover">
-                            </div>
-                            <input type="file" id="file-flat" class="hidden" accept="image/*" onchange="previewImage(this, 'flat')">
                         </div>
                     </div>
                 </div>
@@ -135,9 +122,9 @@
                         </svg>
                     </div>
 
-                    <div class="mb-4 flex gap-4">
-                        <div class="flex-1 space-y-2">
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">対象アイテムの指定</label>
+                    <div class="mb-4 space-y-2">
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">対象アイテムの指定</label>
+                        <div class="flex flex-col gap-2">
                             <select id="itemSelect-product" onchange="updateItemFromSelect('product')" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-green-500 focus:border-green-500 block p-2">
                                 <option value="">アイテムを選択</option>
                                 <option value="セーター">セーター</option>
@@ -152,13 +139,6 @@
                                 <option value="Tシャツ">Tシャツ</option>
                             </select>
                             <input type="text" id="customItem-product" oninput="updateSpecificPrompt('product')" placeholder="自由入力 (例: スラックス)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-green-500 focus:border-green-500 block p-2">
-                        </div>
-                        <div class="w-24">
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 text-center">参考画像</label>
-                            <div onclick="document.getElementById('file-product').click()" class="image-preview w-full h-20 rounded-lg border-2 border-dashed border-slate-200 cursor-pointer overflow-hidden flex items-center justify-center bg-slate-50 hover:bg-slate-100">
-                                <img id="img-product" class="hidden w-full h-full object-cover">
-                            </div>
-                            <input type="file" id="file-product" class="hidden" accept="image/*" onchange="previewImage(this, 'product')">
                         </div>
                     </div>
                 </div>
@@ -186,9 +166,9 @@
                         </svg>
                     </div>
 
-                    <div class="mb-4 flex gap-4">
-                        <div class="flex-1 space-y-2">
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">対象アイテムの指定</label>
+                    <div class="mb-4 space-y-2">
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">対象アイテムの指定</label>
+                        <div class="flex flex-col gap-2">
                             <select id="itemSelect-fabric" onchange="updateItemFromSelect('fabric')" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-purple-500 focus:border-purple-500 block p-2">
                                 <option value="">アイテムを選択</option>
                                 <option value="セーター">セーター</option>
@@ -203,13 +183,6 @@
                                 <option value="Tシャツ">Tシャツ</option>
                             </select>
                             <input type="text" id="customItem-fabric" oninput="updateSpecificPrompt('fabric')" placeholder="自由入力 (例: ワンピース)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-purple-500 focus:border-purple-500 block p-2">
-                        </div>
-                        <div class="w-24">
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 text-center">参考画像</label>
-                            <div onclick="document.getElementById('file-fabric').click()" class="image-preview w-full h-20 rounded-lg border-2 border-dashed border-slate-200 cursor-pointer overflow-hidden flex items-center justify-center bg-slate-50 hover:bg-slate-100">
-                                <img id="img-fabric" class="hidden w-full h-full object-cover">
-                            </div>
-                            <input type="file" id="file-fabric" class="hidden" accept="image/*" onchange="previewImage(this, 'fabric')">
                         </div>
                     </div>
                 </div>
@@ -238,46 +211,36 @@
                     
                     <div class="mb-4 space-y-3">
                         <div class="flex justify-between items-end">
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">アイテム指定 / 数量 / 参考画像</label>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">アイテム指定 / 数量</label>
                             <span id="ratio-guide" class="text-[10px] font-bold text-orange-600">推奨比率: 3:4</span>
                         </div>
                         
-                        <div class="flex gap-4">
+                        <div class="flex gap-2">
                             <div class="flex-1 space-y-2">
-                                <div class="flex gap-2">
-                                    <div class="flex-1 space-y-2">
-                                        <select id="itemSelect-model" onchange="updateItemFromSelect('model')" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-orange-500 focus:border-orange-500 block p-2">
-                                            <option value="">アイテムを選択</option>
-                                            <option value="セーター">セーター</option>
-                                            <option value="カーディガン">カーディガン</option>
-                                            <option value="ニットシャツ">ニットシャツ</option>
-                                            <option value="ポロシャツ">ポロシャツ</option>
-                                            <option value="ジャケット">ジャケット</option>
-                                            <option value="フーディー">フーディー</option>
-                                            <option value="シャツ">シャツ</option>
-                                            <option value="パンツ">パンツ</option>
-                                            <option value="デニム">デニム</option>
-                                            <option value="Tシャツ">Tシャツ</option>
-                                        </select>
-                                        <input type="text" id="customItem-model" oninput="updateSpecificPrompt('model')" placeholder="直接入力 (例: ドレス)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-orange-500 focus:border-orange-500 block p-2">
-                                    </div>
-                                    <div class="w-16">
-                                        <select id="itemCount-model" onchange="updateSpecificPrompt('model')" class="w-full h-full bg-orange-50 border border-orange-100 text-slate-900 text-xs rounded-lg focus:ring-orange-500 focus:border-orange-500 block p-2 text-center font-bold">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <select id="itemSelect-model" onchange="updateItemFromSelect('model')" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-orange-500 focus:border-orange-500 block p-2">
+                                    <option value="">アイテムを選択</option>
+                                    <option value="セーター">セーター</option>
+                                    <option value="カーディガン">カーディガン</option>
+                                    <option value="ニットシャツ">ニットシャツ</option>
+                                    <option value="ポロシャツ">ポロシャツ</option>
+                                    <option value="ジャケット">ジャケット</option>
+                                    <option value="フーディー">フーディー</option>
+                                    <option value="シャツ">シャツ</option>
+                                    <option value="パンツ">パンツ</option>
+                                    <option value="デニム">デニム</option>
+                                    <option value="Tシャツ">Tシャツ</option>
+                                </select>
+                                <input type="text" id="customItem-model" oninput="updateSpecificPrompt('model')" placeholder="直接入力 (例: ドレス)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-orange-500 focus:border-orange-500 block p-2">
                             </div>
-                            <div class="w-24">
-                                <div onclick="document.getElementById('file-model').click()" class="image-preview w-full h-20 rounded-lg border-2 border-dashed border-slate-200 cursor-pointer overflow-hidden flex items-center justify-center bg-slate-50 hover:bg-slate-100">
-                                    <img id="img-model" class="hidden w-full h-full object-cover">
-                                </div>
-                                <input type="file" id="file-model" class="hidden" accept="image/*" onchange="previewImage(this, 'model')">
+                            <div class="w-20">
+                                <select id="itemCount-model" onchange="updateSpecificPrompt('model')" class="w-full h-full bg-orange-50 border border-orange-100 text-slate-900 text-xs rounded-lg focus:ring-orange-500 focus:border-orange-500 block p-2 text-center font-bold">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -465,8 +428,8 @@
             <h2 class="text-xl font-bold text-slate-800 mb-4">AIツールへの使いこなしTips</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                    <h4 class="font-semibold text-slate-700 mb-2">1. 画像を読み込んで使う</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed">右上の枠をクリックして元画像を読み込めます（プレビュー用）。AIツールへはその画像をアップロードした上でコピーしたプロンプトを貼り付けてください。</p>
+                    <h4 class="font-semibold text-slate-700 mb-2">1. プロンプトを直接編集する</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed">各ボックス内のテキストは自由に書き換え可能です。「リセット」でいつでも元の指示に戻せます。</p>
                 </div>
                 <div>
                     <h4 class="font-semibold text-slate-700 mb-2">2. 条件分岐を活用する</h4>
@@ -598,18 +561,6 @@ Adobe Illustratorで作成されたような、精密で高品質なベクター
             resetPatternTags();
             updateAllPrompts();
         };
-
-        function previewImage(input, type) {
-            const img = document.getElementById(`img-${type}`);
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    img.src = e.target.result;
-                    img.classList.remove('hidden');
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
 
         function getSelectedItem(type) {
             const select = document.getElementById(`itemSelect-${type}`);
