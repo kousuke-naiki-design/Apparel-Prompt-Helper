@@ -32,6 +32,22 @@
             background-color: #cbd5e1;
             border-radius: 20px;
         }
+        .image-preview {
+            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23cbd5e1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 24px;
+        }
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 4px;
+        }
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body class="p-4 md:p-8 text-slate-800">
@@ -52,6 +68,7 @@
             <button onclick="filterCards('flat')" class="px-4 py-2 rounded-full bg-white border border-slate-200 text-slate-600 text-sm font-medium hover:bg-slate-50 transition-colors">線画（平絵）作成</button>
             <button onclick="filterCards('product')" class="px-4 py-2 rounded-full bg-white border border-slate-200 text-slate-600 text-sm font-medium hover:bg-slate-50 transition-colors">平置き・物撮り</button>
             <button onclick="filterCards('fabric')" class="px-4 py-2 rounded-full bg-white border border-slate-200 text-slate-600 text-sm font-medium hover:bg-slate-50 transition-colors">柄グラフィック抽出</button>
+            <button onclick="filterCards('pattern')" class="px-4 py-2 rounded-full bg-white border border-slate-200 text-slate-600 text-sm font-medium hover:bg-slate-50 transition-colors">総柄作成</button>
             <button onclick="filterCards('model')" class="px-4 py-2 rounded-full bg-white border border-slate-200 text-slate-600 text-sm font-medium hover:bg-slate-50 transition-colors">インスピレーション</button>
         </div>
 
@@ -68,9 +85,9 @@
                         </svg>
                     </div>
 
-                    <div class="mb-4 space-y-2">
-                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">対象アイテムの指定</label>
-                        <div class="flex flex-col gap-2">
+                    <div class="mb-4 flex gap-4">
+                        <div class="flex-1 space-y-2">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">対象アイテムの指定</label>
                             <select id="itemSelect-flat" onchange="updateItemFromSelect('flat')" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2">
                                 <option value="">アイテムを選択</option>
                                 <option value="セーター">セーター</option>
@@ -85,6 +102,13 @@
                                 <option value="Tシャツ">Tシャツ</option>
                             </select>
                             <input type="text" id="customItem-flat" oninput="updateSpecificPrompt('flat')" placeholder="自由入力 (例: トレンチコート)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2">
+                        </div>
+                        <div class="w-24">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 text-center">参考画像</label>
+                            <div onclick="document.getElementById('file-flat').click()" class="image-preview w-full h-20 rounded-lg border-2 border-dashed border-slate-200 cursor-pointer overflow-hidden flex items-center justify-center bg-slate-50 hover:bg-slate-100">
+                                <img id="img-flat" class="hidden w-full h-full object-cover">
+                            </div>
+                            <input type="file" id="file-flat" class="hidden" accept="image/*" onchange="previewImage(this, 'flat')">
                         </div>
                     </div>
                 </div>
@@ -111,9 +135,9 @@
                         </svg>
                     </div>
 
-                    <div class="mb-4 space-y-2">
-                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">対象アイテムの指定</label>
-                        <div class="flex flex-col gap-2">
+                    <div class="mb-4 flex gap-4">
+                        <div class="flex-1 space-y-2">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">対象アイテムの指定</label>
                             <select id="itemSelect-product" onchange="updateItemFromSelect('product')" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-green-500 focus:border-green-500 block p-2">
                                 <option value="">アイテムを選択</option>
                                 <option value="セーター">セーター</option>
@@ -129,15 +153,22 @@
                             </select>
                             <input type="text" id="customItem-product" oninput="updateSpecificPrompt('product')" placeholder="自由入力 (例: スラックス)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-green-500 focus:border-green-500 block p-2">
                         </div>
+                        <div class="w-24">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 text-center">参考画像</label>
+                            <div onclick="document.getElementById('file-product').click()" class="image-preview w-full h-20 rounded-lg border-2 border-dashed border-slate-200 cursor-pointer overflow-hidden flex items-center justify-center bg-slate-50 hover:bg-slate-100">
+                                <img id="img-product" class="hidden w-full h-full object-cover">
+                            </div>
+                            <input type="file" id="file-product" class="hidden" accept="image/*" onchange="previewImage(this, 'product')">
+                        </div>
                     </div>
                 </div>
 
                 <div>
                     <div class="flex justify-between items-end mb-1">
                         <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">プロンプト編集</label>
-                        <button onclick="resetPrompt('product')" class="text-[10px] text-blue-500 hover:text-blue-700 font-bold transition-colors">リセット</button>
+                        <button onclick="resetPrompt('product')" class="text-[10px] text-green-500 hover:text-green-700 font-bold transition-colors">リセット</button>
                     </div>
-                    <textarea id="display-product" class="w-full bg-slate-50 p-3 rounded border border-slate-100 mb-4 h-64 text-[10px] text-slate-600 leading-normal focus:bg-white focus:ring-1 focus:ring-blue-200 outline-none resize-none transition-all"></textarea>
+                    <textarea id="display-product" class="w-full bg-slate-50 p-3 rounded border border-slate-100 mb-4 h-64 text-[10px] text-slate-600 leading-normal focus:bg-white focus:ring-1 focus:ring-green-200 outline-none resize-none transition-all"></textarea>
                     <button onclick="handleCopy('product')" class="w-full bg-[#18ABA0] hover:opacity-90 text-white py-2.5 rounded-lg font-medium transition-all flex items-center justify-center gap-2">
                         <span>プロンプトをコピー</span>
                     </button>
@@ -155,9 +186,9 @@
                         </svg>
                     </div>
 
-                    <div class="mb-4 space-y-2">
-                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">対象アイテムの指定</label>
-                        <div class="flex flex-col gap-2">
+                    <div class="mb-4 flex gap-4">
+                        <div class="flex-1 space-y-2">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">対象アイテムの指定</label>
                             <select id="itemSelect-fabric" onchange="updateItemFromSelect('fabric')" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-purple-500 focus:border-purple-500 block p-2">
                                 <option value="">アイテムを選択</option>
                                 <option value="セーター">セーター</option>
@@ -173,13 +204,20 @@
                             </select>
                             <input type="text" id="customItem-fabric" oninput="updateSpecificPrompt('fabric')" placeholder="自由入力 (例: ワンピース)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-purple-500 focus:border-purple-500 block p-2">
                         </div>
+                        <div class="w-24">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 text-center">参考画像</label>
+                            <div onclick="document.getElementById('file-fabric').click()" class="image-preview w-full h-20 rounded-lg border-2 border-dashed border-slate-200 cursor-pointer overflow-hidden flex items-center justify-center bg-slate-50 hover:bg-slate-100">
+                                <img id="img-fabric" class="hidden w-full h-full object-cover">
+                            </div>
+                            <input type="file" id="file-fabric" class="hidden" accept="image/*" onchange="previewImage(this, 'fabric')">
+                        </div>
                     </div>
                 </div>
 
                 <div>
                     <div class="flex justify-between items-end mb-1">
                         <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">プロンプト編集</label>
-                        <button onclick="resetPrompt('fabric')" class="text-[10px] text-blue-500 hover:text-blue-700 font-bold transition-colors">リセット</button>
+                        <button onclick="resetPrompt('fabric')" class="text-[10px] text-purple-500 hover:text-purple-700 font-bold transition-colors">リセット</button>
                     </div>
                     <textarea id="display-fabric" class="w-full bg-slate-50 p-3 rounded border border-slate-100 mb-4 h-64 text-[10px] text-slate-600 leading-normal focus:bg-white focus:ring-1 focus:ring-purple-200 outline-none resize-none transition-all"></textarea>
                     <button onclick="handleCopy('fabric')" class="w-full bg-[#18ABA0] hover:opacity-90 text-white py-2.5 rounded-lg font-medium transition-all flex items-center justify-center gap-2">
@@ -200,39 +238,46 @@
                     
                     <div class="mb-4 space-y-3">
                         <div class="flex justify-between items-end">
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">アイテム指定 / 数量</label>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">アイテム指定 / 数量 / 参考画像</label>
                             <span id="ratio-guide" class="text-[10px] font-bold text-orange-600">推奨比率: 3:4</span>
                         </div>
                         
-                        <!-- Combined Inputs Row -->
-                        <div class="flex gap-2">
+                        <div class="flex gap-4">
                             <div class="flex-1 space-y-2">
-                                <select id="itemSelect-model" onchange="updateItemFromSelect('model')" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-orange-500 focus:border-orange-500 block p-2">
-                                    <option value="">アイテムを選択</option>
-                                    <option value="セーター">セーター</option>
-                                    <option value="カーディガン">カーディガン</option>
-                                    <option value="ニットシャツ">ニットシャツ</option>
-                                    <option value="ポロシャツ">ポロシャツ</option>
-                                    <option value="ジャケット">ジャケット</option>
-                                    <option value="フーディー">フーディー</option>
-                                    <option value="シャツ">シャツ</option>
-                                    <option value="パンツ">パンツ</option>
-                                    <option value="デニム">デニム</option>
-                                    <option value="Tシャツ">Tシャツ</option>
-                                </select>
-                                <input type="text" id="customItem-model" oninput="updateSpecificPrompt('model')" placeholder="直接入力 (例: ドレス)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-orange-500 focus:border-orange-500 block p-2">
+                                <div class="flex gap-2">
+                                    <div class="flex-1 space-y-2">
+                                        <select id="itemSelect-model" onchange="updateItemFromSelect('model')" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-orange-500 focus:border-orange-500 block p-2">
+                                            <option value="">アイテムを選択</option>
+                                            <option value="セーター">セーター</option>
+                                            <option value="カーディガン">カーディガン</option>
+                                            <option value="ニットシャツ">ニットシャツ</option>
+                                            <option value="ポロシャツ">ポロシャツ</option>
+                                            <option value="ジャケット">ジャケット</option>
+                                            <option value="フーディー">フーディー</option>
+                                            <option value="シャツ">シャツ</option>
+                                            <option value="パンツ">パンツ</option>
+                                            <option value="デニム">デニム</option>
+                                            <option value="Tシャツ">Tシャツ</option>
+                                        </select>
+                                        <input type="text" id="customItem-model" oninput="updateSpecificPrompt('model')" placeholder="直接入力 (例: ドレス)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-orange-500 focus:border-orange-500 block p-2">
+                                    </div>
+                                    <div class="w-16">
+                                        <select id="itemCount-model" onchange="updateSpecificPrompt('model')" class="w-full h-full bg-orange-50 border border-orange-100 text-slate-900 text-xs rounded-lg focus:ring-orange-500 focus:border-orange-500 block p-2 text-center font-bold">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            
-                            <!-- Simple Count Selector -->
-                            <div class="w-20">
-                                <select id="itemCount-model" onchange="updateSpecificPrompt('model')" class="w-full h-full bg-orange-50 border border-orange-100 text-slate-900 text-xs rounded-lg focus:ring-orange-500 focus:border-orange-500 block p-2 text-center font-bold">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                </select>
+                            <div class="w-24">
+                                <div onclick="document.getElementById('file-model').click()" class="image-preview w-full h-20 rounded-lg border-2 border-dashed border-slate-200 cursor-pointer overflow-hidden flex items-center justify-center bg-slate-50 hover:bg-slate-100">
+                                    <img id="img-model" class="hidden w-full h-full object-cover">
+                                </div>
+                                <input type="file" id="file-model" class="hidden" accept="image/*" onchange="previewImage(this, 'model')">
                             </div>
                         </div>
                     </div>
@@ -248,6 +293,166 @@
                     </button>
                 </div>
             </div>
+
+            <!-- Pattern Creation (総柄作成) -->
+            <div class="prompt-card bg-white p-6 rounded-xl border border-slate-200 flex flex-col justify-between md:col-span-2" data-category="pattern">
+                <div>
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="flex flex-wrap items-center gap-3">
+                            <span class="bg-indigo-100 text-indigo-700 text-base font-bold px-3 py-1 rounded uppercase tracking-wide">総柄作成</span>
+                            
+                            <div class="flex bg-slate-100 rounded-lg p-1">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="pattern-type" value="interlocking" class="peer sr-only" onchange="updateSpecificPrompt('pattern')" checked>
+                                    <div class="px-3 py-1 text-xs font-medium rounded-md text-slate-500 peer-checked:bg-white peer-checked:text-indigo-600 peer-checked:shadow-sm transition-all">差し込み柄</div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="pattern-type" value="oneway" class="peer sr-only" onchange="updateSpecificPrompt('pattern')">
+                                    <div class="px-3 py-1 text-xs font-medium rounded-md text-slate-500 peer-checked:bg-white peer-checked:text-indigo-600 peer-checked:shadow-sm transition-all">一方柄</div>
+                                </label>
+                            </div>
+
+                            <span class="text-[11px] text-rose-500 font-bold">※このプロンプトはメインイメージにホワイトの画像を設定してください。</span>
+                            <button onclick="showWhiteImagePreview()" class="text-[10px] bg-white hover:bg-slate-50 text-slate-600 py-1.5 px-3 rounded border border-slate-300 transition-colors flex items-center gap-1 shadow-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                ホワイトの画像(1:1)を表示
+                            </button>
+                        </div>
+                        <!-- Seamless Pattern Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-400 shrink-0 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4h6v6H4z M14 4h6v6h-6z M4 14h6v6H4z M14 14h6v6h-6z" />
+                        </svg>
+                    </div>
+
+                    <!-- Pattern Options (Scrollable area) -->
+                    <div class="mb-4 h-56 overflow-y-auto pr-2 space-y-4 scrollbar-thin">
+                        <!-- Theme -->
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">テーマ</label>
+                            <div class="flex flex-wrap gap-1 mb-2">
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="theme" onclick="togglePatternTag(this)">花柄</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="theme" onclick="togglePatternTag(this)">葉柄</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="theme" onclick="togglePatternTag(this)">優雅</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="theme" onclick="togglePatternTag(this)">自然</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="theme" onclick="togglePatternTag(this)">幾何学模様</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="theme" onclick="togglePatternTag(this)">ペイズリー</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="theme" onclick="togglePatternTag(this)">アニマル</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="theme" onclick="togglePatternTag(this)">ボタニカル</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="theme" onclick="togglePatternTag(this)">レトロ</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="theme" onclick="togglePatternTag(this)">モダン</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="theme" onclick="togglePatternTag(this)">和柄</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="theme" onclick="togglePatternTag(this)">カモフラージュ</button>
+                                <button type="button" class="px-2 py-1 bg-transparent rounded text-xs text-slate-400 hover:text-rose-500 transition-colors flex items-center gap-1 ml-1" onclick="clearPatternCategory('theme')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>クリア
+                                </button>
+                            </div>
+                            <input type="text" id="custom-theme-pattern" oninput="updateSpecificPrompt('pattern')" placeholder="自由入力 (カンマ区切り)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block p-2">
+                        </div>
+
+                        <!-- Style -->
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">表現形式</label>
+                            <div class="flex flex-wrap gap-1 mb-2">
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="style" onclick="togglePatternTag(this)">細いブラシ</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="style" onclick="togglePatternTag(this)">繊細なブラシ</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="style" onclick="togglePatternTag(this)">柔らかい境界</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="style" onclick="togglePatternTag(this)">詳細な描写</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="style" onclick="togglePatternTag(this)">水彩画風</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="style" onclick="togglePatternTag(this)">油絵風</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="style" onclick="togglePatternTag(this)">ラインアート</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="style" onclick="togglePatternTag(this)">シルクスクリーン</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="style" onclick="togglePatternTag(this)">ベクターフラット</button>
+                                <button type="button" class="px-2 py-1 bg-transparent rounded text-xs text-slate-400 hover:text-rose-500 transition-colors flex items-center gap-1 ml-1" onclick="clearPatternCategory('style')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>クリア
+                                </button>
+                            </div>
+                            <input type="text" id="custom-style-pattern" oninput="updateSpecificPrompt('pattern')" placeholder="自由入力 (カンマ区切り)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block p-2">
+                        </div>
+
+                        <!-- Elements -->
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">要素</label>
+                            <div class="flex flex-wrap gap-1 mb-2">
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="elements" onclick="togglePatternTag(this)">大きな花</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="elements" onclick="togglePatternTag(this)">小さな花</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="elements" onclick="togglePatternTag(this)">葉</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="elements" onclick="togglePatternTag(this)">果実</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="elements" onclick="togglePatternTag(this)">ツル</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="elements" onclick="togglePatternTag(this)">蝶</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="elements" onclick="togglePatternTag(this)">小鳥</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="elements" onclick="togglePatternTag(this)">幾何学図形</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="elements" onclick="togglePatternTag(this)">水玉</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="elements" onclick="togglePatternTag(this)">ストライプ</button>
+                                <button type="button" class="px-2 py-1 bg-transparent rounded text-xs text-slate-400 hover:text-rose-500 transition-colors flex items-center gap-1 ml-1" onclick="clearPatternCategory('elements')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>クリア
+                                </button>
+                            </div>
+                            <input type="text" id="custom-elements-pattern" oninput="updateSpecificPrompt('pattern')" placeholder="自由入力 (カンマ区切り)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block p-2">
+                        </div>
+
+                        <!-- Colors -->
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">色彩</label>
+                            <div class="flex flex-wrap gap-1 mb-2">
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="colors" onclick="togglePatternTag(this)">落ち着いた色調</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="colors" onclick="togglePatternTag(this)">自然な色合い</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="colors" onclick="togglePatternTag(this)">エメラルドグリーン</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="colors" onclick="togglePatternTag(this)">ラベンダーパープル</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="colors" onclick="togglePatternTag(this)">ホワイト</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="colors" onclick="togglePatternTag(this)">パステルカラー</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="colors" onclick="togglePatternTag(this)">モノクロ</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="colors" onclick="togglePatternTag(this)">ビビッドカラー</button>
+                                <button type="button" class="pattern-tag px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs text-slate-600 hover:bg-slate-100 transition-colors" data-category="colors" onclick="togglePatternTag(this)">アースカラー</button>
+                                <button type="button" class="px-2 py-1 bg-transparent rounded text-xs text-slate-400 hover:text-rose-500 transition-colors flex items-center gap-1 ml-1" onclick="clearPatternCategory('colors')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>クリア
+                                </button>
+                            </div>
+                            <input type="text" id="custom-colors-pattern" oninput="updateSpecificPrompt('pattern')" placeholder="自由入力 (カンマ区切り)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block p-2">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-2">
+                    <div class="flex justify-between items-end mb-1">
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">プロンプト編集</label>
+                        <button onclick="resetPrompt('pattern')" class="text-[10px] text-indigo-500 hover:text-indigo-700 font-bold transition-colors">リセット</button>
+                    </div>
+                    <textarea id="display-pattern" class="w-full bg-slate-50 p-3 rounded border border-slate-100 mb-4 h-48 text-[10px] text-slate-600 leading-normal focus:bg-white focus:ring-1 focus:ring-indigo-200 outline-none resize-none transition-all scrollbar-thin"></textarea>
+                    <button onclick="handleCopy('pattern')" class="w-full bg-[#18ABA0] hover:opacity-90 text-white py-2.5 rounded-lg font-medium transition-all flex items-center justify-center gap-2 mb-2">
+                        <span>プロンプトをコピー</span>
+                    </button>
+                    <p class="text-[10px] text-slate-400 text-center">※画像生成AIの特性上、差し込み柄が必ずしも完全にシームレス（途切れないリピート）で再現されるわけではありません。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- White Image Preview Modal -->
+        <div id="whiteImageModal" class="fixed inset-0 bg-slate-900 bg-opacity-50 hidden z-50 flex items-center justify-center opacity-0 transition-opacity duration-300">
+            <div class="bg-white p-6 rounded-xl shadow-xl max-w-sm w-full transform scale-95 transition-transform duration-300" id="whiteImageModalContent">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold text-slate-800">ホワイトの画像 (1:1)</h3>
+                    <button onclick="closeWhiteImagePreview()" class="text-slate-400 hover:text-slate-600 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+                <div class="mb-6 flex flex-col items-center">
+                    <canvas id="whiteImageCanvas" width="1024" height="1024" class="w-48 h-48 border border-slate-200 rounded shadow-sm bg-white"></canvas>
+                    <p class="text-[10px] text-slate-400 mt-2">1024 × 1024 px</p>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="copyWhiteImage()" class="flex-1 bg-[#18ABA0] hover:opacity-90 text-white py-2 rounded-lg font-medium transition-colors text-sm flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
+                        コピー
+                    </button>
+                    <button onclick="downloadWhiteImage()" class="flex-1 bg-slate-800 hover:bg-slate-900 text-white py-2 rounded-lg font-medium transition-colors text-sm flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                        保存
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- Feedback Toast -->
@@ -260,8 +465,8 @@
             <h2 class="text-xl font-bold text-slate-800 mb-4">AIツールへの使いこなしTips</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                    <h4 class="font-semibold text-slate-700 mb-2">1. プロンプトを直接編集する</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed">各ボックス内のテキストは自由に書き換え可能です。「リセット」でいつでも元の指示に戻せます。</p>
+                    <h4 class="font-semibold text-slate-700 mb-2">1. 画像を読み込んで使う</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed">右上の枠をクリックして元画像を読み込めます（プレビュー用）。AIツールへはその画像をアップロードした上でコピーしたプロンプトを貼り付けてください。</p>
                 </div>
                 <div>
                     <h4 class="font-semibold text-slate-700 mb-2">2. 条件分岐を活用する</h4>
@@ -276,6 +481,19 @@
     </div>
 
     <script>
+        const PATTERN_BASE_PROMPTS = {
+            interlocking: `以下の条件で、上下反転しても同じ柄になり、かつ上下左右に完全にシームレスにつながるリピート柄のグラフィックを作成して。
+
+スタイル要素とモチーフに基づいて作成された、**上下左右に完全にシームレスにつながる、多方向、かつインターロッキング（差し込み）のタイル状リピートパターン。キャンバスの四端（上、下、左、右）で要素が途切れず、隣接するタイルと完璧に結合する。**
+
+既存のモチーフが抽出され、それらの方向は完全にランダム化されています。すべてのモチーフは非線形で、テセレーション（敷き詰め）された配置で散布されています。それらはランダムに（0、90、180、270度）回転され、時には反転され、モチーフの大部分が明示的に180度回転（逆さま）されています。パターンは全面プリントでキャンバス全体を満たし、要素がしっかりとインターロック（噛み合い）して、本質的な上下がまったくない、まとまりのあるバランスの取れた構成を作り出しています。どの視点から見ても、デザインは自然で、方向が定まっているように見えます。`,
+            oneway: `以下の条件で、すべてのモチーフが単一の明確な上向きを向いた、緻密でシームレスな一方方向（ワンウェイ）リピートパターンのグラフィックを作成して。
+
+スタイル要素とモチーフに基づいて作成された、上下左右に完全にシームレスにつながる、単一方向の緻密なタイル状リピートパターン。キャンバスの四端（上、下、左、右）で要素が途切れず、隣接するタイルと完璧に結合し、連続的な流れを作り出す。
+
+すべてのモチーフ（花、葉、果実）は、単一の明確な「上」方向を向いている。茎や枝は自然に上に伸び、花は上向きに咲いている。ランダムな回転（90、180、270度）や、下向きの反転は一切ない。すべての要素が統一された垂直方向の成長を維持している。モチーフは非線形だが、整然とした上向きの構成で配置され、隙間なく敷き詰められている。全面プリントでキャンバス全体を満たし、自然で洗練された上向きの構図を作り出している。`
+        };
+
         const PROMPTS = {
             flat: `アップロードされた衣服の画像を、プロフェッショナルなテクニカルフラット（仕様書用平絵）に変換してください。衣服の素材に応じてステッチの表現を自動的に調整すること。
 【描画スタイル】
@@ -329,6 +547,17 @@ Adobe Illustratorで作成されたような、精密で高品質なベクター
 画像中央に配置し、完全な左右対称（該当する場合）、または正確なプロポーションで描くこと。
 【仕上げ】
 ミニマリズムを徹底し、テキスタイルデザインツールでそのまま再利用できるクオリティで出力すること。`,
+            pattern: `以下の条件で、上下反転しても同じ柄になり、かつ上下左右に完全にシームレスにつながるリピート柄のグラフィックを作成して。
+
+スタイル要素とモチーフに基づいて作成された、**上下左右に完全にシームレスにつながる、多方向、かつインターロッキング（差し込み）のタイル状リピートパターン。キャンバスの四端（上、下、左、右）で要素が途切れず、隣接するタイルと完璧に結合する。**
+
+既存のモチーフが抽出され、それらの方向は完全にランダム化されています。すべてのモチーフは非線形で、テセレーション（敷き詰め）された配置で散布されています。それらはランダムに（0、90、180、270度）回転され、時には反転され、モチーフの大部分が明示的に180度回転（逆さま）されています。パターンは全面プリントでキャンバス全体を満たし、要素がしっかりとインターロック（噛み合い）して、本質的な上下がまったくない、まとまりのあるバランスの取れた構成を作り出しています。どの視点から見ても、デザインは自然で、方向が定まっているように見えます。
+
+【デザイン設定】
+■ テーマ: [THEME]
+■ 表現形式: [STYLE]
+■ 要素: [ELEMENTS]
+■ 色彩: [COLORS]`,
             model: `あなたはシニア・ファッションデザイナー兼トレンドアナリストです。アップロードされた画像（1枚または複数）からデザイン要素を深く分析し、以下のルールに従って革新的なデザイン案を生成してください。
 
 【STEP 1：デザインDNAの分析】
@@ -366,8 +595,21 @@ Adobe Illustratorで作成されたような、精密で高品質なベクター
         };
 
         window.onload = () => {
+            resetPatternTags();
             updateAllPrompts();
         };
+
+        function previewImage(input, type) {
+            const img = document.getElementById(`img-${type}`);
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    img.src = e.target.result;
+                    img.classList.remove('hidden');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 
         function getSelectedItem(type) {
             const select = document.getElementById(`itemSelect-${type}`);
@@ -388,9 +630,88 @@ Adobe Illustratorで作成されたような、精密で高品質なベクター
             }
         }
 
+        function resetPatternTags() {
+            const radioInterlocking = document.querySelector('input[name="pattern-type"][value="interlocking"]');
+            if (radioInterlocking) radioInterlocking.checked = true;
+
+            const defaultThemes = ['花柄', '葉柄', '優雅', '自然'];
+            const defaultStyles = ['細いブラシ', '繊細なブラシ', '柔らかい境界', '詳細な描写'];
+            const defaultElements = ['大きな花', '小さな花', '葉', '果実'];
+            const defaultColors = ['落ち着いた色調', '自然な色合い', 'エメラルドグリーン', 'ラベンダーパープル', 'ホワイト'];
+
+            document.querySelectorAll('.pattern-tag').forEach(btn => {
+                const cat = btn.getAttribute('data-category');
+                const text = btn.innerText;
+                let isDefault = false;
+                if(cat === 'theme' && defaultThemes.includes(text)) isDefault = true;
+                if(cat === 'style' && defaultStyles.includes(text)) isDefault = true;
+                if(cat === 'elements' && defaultElements.includes(text)) isDefault = true;
+                if(cat === 'colors' && defaultColors.includes(text)) isDefault = true;
+
+                if (isDefault) {
+                    btn.classList.add('selected', 'bg-indigo-500', 'text-white', 'border-indigo-500');
+                    btn.classList.remove('bg-slate-50', 'text-slate-600', 'border-slate-200');
+                } else {
+                    btn.classList.remove('selected', 'bg-indigo-500', 'text-white', 'border-indigo-500');
+                    btn.classList.add('bg-slate-50', 'text-slate-600', 'border-slate-200');
+                }
+            });
+            
+            document.getElementById('custom-theme-pattern').value = '';
+            document.getElementById('custom-style-pattern').value = '';
+            document.getElementById('custom-elements-pattern').value = '';
+            document.getElementById('custom-colors-pattern').value = '';
+        }
+
+        function togglePatternTag(btn) {
+            btn.classList.toggle('selected');
+            if(btn.classList.contains('selected')) {
+                btn.classList.remove('bg-slate-50', 'text-slate-600', 'border-slate-200');
+                btn.classList.add('bg-indigo-500', 'text-white', 'border-indigo-500');
+            } else {
+                btn.classList.add('bg-slate-50', 'text-slate-600', 'border-slate-200');
+                btn.classList.remove('bg-indigo-500', 'text-white', 'border-indigo-500');
+            }
+            updateSpecificPrompt('pattern');
+        }
+
+        function clearPatternCategory(cat) {
+            document.querySelectorAll(`.pattern-tag[data-category="${cat}"]`).forEach(btn => {
+                btn.classList.remove('selected', 'bg-indigo-500', 'text-white', 'border-indigo-500');
+                btn.classList.add('bg-slate-50', 'text-slate-600', 'border-slate-200');
+            });
+            document.getElementById(`custom-${cat}-pattern`).value = '';
+            updateSpecificPrompt('pattern');
+        }
+
         function updateSpecificPrompt(type) {
             const textarea = document.getElementById('display-' + type);
             if (!textarea) return;
+            
+            let basePrompt = PROMPTS[type];
+
+            if (type === 'pattern') {
+                const getValues = (cat) => {
+                    const selected = Array.from(document.querySelectorAll(`.pattern-tag.selected[data-category="${cat}"]`)).map(b => b.innerText);
+                    const custom = document.getElementById(`custom-${cat}-pattern`).value;
+                    if (custom.trim()) {
+                        selected.push(...custom.split(',').map(s => s.trim()).filter(s => s));
+                    }
+                    return selected.join(', ') || '指定なし';
+                };
+
+                const patternType = document.querySelector('input[name="pattern-type"]:checked').value;
+                const patternBase = PATTERN_BASE_PROMPTS[patternType];
+                
+                let finalPrompt = patternBase + `\n\n【デザイン設定】\n■ テーマ: [THEME]\n■ 表現形式: [STYLE]\n■ 要素: [ELEMENTS]\n■ 色彩: [COLORS]`;
+
+                finalPrompt = finalPrompt.replace('[THEME]', getValues('theme'))
+                                       .replace('[STYLE]', getValues('style'))
+                                       .replace('[ELEMENTS]', getValues('elements'))
+                                       .replace('[COLORS]', getValues('colors'));
+                textarea.value = finalPrompt;
+                return;
+            }
             
             const item = getSelectedItem(type);
             let text = "";
@@ -398,8 +719,6 @@ Adobe Illustratorで作成されたような、精密で高品質なベクター
             if (item) {
                 text = `対象アイテム: ${item}\n\n`;
             }
-            
-            let basePrompt = PROMPTS[type];
             
             if (type === 'model') {
                 const countSelect = document.getElementById('itemCount-model');
@@ -416,12 +735,15 @@ Adobe Illustratorで作成されたような、精密で高品質なベクター
         }
 
         function updateAllPrompts() {
-            ['flat', 'product', 'fabric', 'model'].forEach(type => {
+            ['flat', 'product', 'fabric', 'pattern', 'model'].forEach(type => {
                 updateSpecificPrompt(type);
             });
         }
 
         function resetPrompt(type) {
+            if (type === 'pattern') {
+                resetPatternTags();
+            }
             updateSpecificPrompt(type);
             
             const toast = document.getElementById('toast');
@@ -459,6 +781,63 @@ Adobe Illustratorで作成されたような、精密で高品質なベクター
                 console.error('Copy failed', err);
             }
             document.body.removeChild(textArea);
+        }
+
+        function showWhiteImagePreview() {
+            const modal = document.getElementById('whiteImageModal');
+            const modalContent = document.getElementById('whiteImageModalContent');
+            const canvas = document.getElementById('whiteImageCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Draw pure white image
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            modal.classList.remove('hidden');
+            // Trigger reflow for animation
+            void modal.offsetWidth;
+            modal.classList.remove('opacity-0');
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+        }
+
+        function closeWhiteImagePreview() {
+            const modal = document.getElementById('whiteImageModal');
+            const modalContent = document.getElementById('whiteImageModalContent');
+            
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        async function copyWhiteImage() {
+            const canvas = document.getElementById('whiteImageCanvas');
+            try {
+                canvas.toBlob(async (blob) => {
+                    const item = new ClipboardItem({ "image/png": blob });
+                    await navigator.clipboard.write([item]);
+                    
+                    const toast = document.getElementById('toast');
+                    toast.innerText = "画像をコピーしました！";
+                    showToast();
+                    setTimeout(() => { toast.innerText = "コピーしました！"; }, 2000);
+                });
+            } catch (err) {
+                console.error("Failed to copy image: ", err);
+                alert("お使いのブラウザは画像のコピーに対応していない可能性があります。保存（ダウンロード）をご利用ください。");
+            }
+        }
+
+        function downloadWhiteImage() {
+            const canvas = document.getElementById('whiteImageCanvas');
+            const link = document.createElement('a');
+            link.download = 'white_image_1x1.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
         }
 
         function showToast() {
