@@ -401,16 +401,26 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
                 </div>
-                <div class="mb-6 flex flex-col items-center">
-                    <canvas id="whiteImageCanvas" width="1024" height="1024" class="w-48 h-48 border border-slate-200 rounded shadow-sm bg-white"></canvas>
+                <div class="mb-4 flex flex-col items-center">
+                    <img id="whiteImageElement" class="w-48 h-48 border border-slate-200 rounded shadow-sm bg-white object-cover cursor-pointer" alt="ホワイトの画像">
                     <p class="text-[10px] text-slate-400 mt-2">1024 × 1024 px</p>
                 </div>
+                
+                <!-- Notion対策の案内メッセージを追加 -->
+                <div class="text-[10px] text-slate-500 mb-4 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                    <p class="font-bold text-slate-600 mb-1 flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-amber-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+                        Notion等でボタンが反応しない場合
+                    </p>
+                    <p class="leading-relaxed">上の<span class="font-bold text-slate-700">画像を右クリック（スマホは長押し）</span>して、「画像をコピー」または「画像を保存」をご利用ください。</p>
+                </div>
+
                 <div class="flex gap-3">
-                    <button onclick="copyWhiteImage()" class="flex-1 bg-[#18ABA0] hover:opacity-90 text-white py-2 rounded-lg font-medium transition-colors text-sm flex items-center justify-center gap-2">
+                    <button onclick="copyWhiteImage()" class="flex-1 bg-[#18ABA0] hover:opacity-90 text-white py-2.5 rounded-lg font-medium transition-colors text-sm flex items-center justify-center gap-2 shadow-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
                         コピー
                     </button>
-                    <button onclick="downloadWhiteImage()" class="flex-1 bg-slate-800 hover:bg-slate-900 text-white py-2 rounded-lg font-medium transition-colors text-sm flex items-center justify-center gap-2">
+                    <button onclick="downloadWhiteImage()" class="flex-1 bg-slate-800 hover:bg-slate-900 text-white py-2.5 rounded-lg font-medium transition-colors text-sm flex items-center justify-center gap-2 shadow-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                         保存
                     </button>
@@ -510,13 +520,7 @@ Adobe Illustratorで作成されたような、精密で高品質なベクター
 画像中央に配置し、完全な左右対称（該当する場合）、または正確なプロポーションで描くこと。
 【仕上げ】
 ミニマリズムを徹底し、テキスタイルデザインツールでそのまま再利用できるクオリティで出力すること。`,
-            pattern: `以下の条件で、上下反転しても同じ柄になり、かつ上下左右に完全にシームレスにつながるリピート柄のグラフィックを作成して。
-
-スタイル要素とモチーフに基づいて作成された、**上下左右に完全にシームレスにつながる、多方向、かつインターロッキング（差し込み）のタイル状リピートパターン。キャンバスの四端（上、下、左、右）で要素が途切れず、隣接するタイルと完璧に結合する。**
-
-既存のモチーフが抽出され、それらの方向は完全にランダム化されています。すべてのモチーフは非線形で、テセレーション（敷き詰め）された配置で散布されています。それらはランダムに（0、90、180、270度）回転され、時には反転され、モチーフの大部分が明示的に180度回転（逆さま）されています。パターンは全面プリントでキャンバス全体を満たし、要素がしっかりとインターロック（噛み合い）して、本質的な上下がまったくない、まとまりのあるバランスの取れた構成を作り出しています。どの視点から見ても、デザインは自然で、方向が定まっているように見えます。
-
-【デザイン設定】
+            pattern: `【デザイン設定】
 ■ テーマ: [THEME]
 ■ 表現形式: [STYLE]
 ■ 要素: [ELEMENTS]
@@ -696,11 +700,7 @@ Adobe Illustratorで作成されたような、精密で高品質なベクター
                 resetPatternTags();
             }
             updateSpecificPrompt(type);
-            
-            const toast = document.getElementById('toast');
-            toast.innerText = "リセットしました";
-            showToast();
-            setTimeout(() => { toast.innerText = "コピーしました！"; }, 2000);
+            showToastMessage("リセットしました");
         }
 
         function handleCopy(type) {
@@ -727,9 +727,10 @@ Adobe Illustratorで作成されたような、精密で高品質なベクター
             textArea.select();
             try {
                 document.execCommand('copy');
-                showToast();
+                showToastMessage("コピーしました！");
             } catch (err) {
                 console.error('Copy failed', err);
+                showToastMessage("コピーに失敗しました", true);
             }
             document.body.removeChild(textArea);
         }
@@ -737,16 +738,21 @@ Adobe Illustratorで作成されたような、精密で高品質なベクター
         function showWhiteImagePreview() {
             const modal = document.getElementById('whiteImageModal');
             const modalContent = document.getElementById('whiteImageModalContent');
-            const canvas = document.getElementById('whiteImageCanvas');
-            const ctx = canvas.getContext('2d');
+            const imgElement = document.getElementById('whiteImageElement');
             
-            // Draw pure white image
-            ctx.fillStyle = '#FFFFFF';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // Generate Data URL for 1024x1024 white image only once
+            if (!imgElement.src || imgElement.src === window.location.href) {
+                const canvas = document.createElement('canvas');
+                canvas.width = 1024;
+                canvas.height = 1024;
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                imgElement.src = canvas.toDataURL('image/png');
+            }
             
             modal.classList.remove('hidden');
-            // Trigger reflow for animation
-            void modal.offsetWidth;
+            void modal.offsetWidth; // trigger reflow
             modal.classList.remove('opacity-0');
             modalContent.classList.remove('scale-95');
             modalContent.classList.add('scale-100');
@@ -766,37 +772,76 @@ Adobe Illustratorで作成されたような、精密で高品質なベクター
         }
 
         async function copyWhiteImage() {
-            const canvas = document.getElementById('whiteImageCanvas');
+            const imgElement = document.getElementById('whiteImageElement');
+            let success = false;
+
+            // テキストと同じ仕組みで画像要素をコピー (Notionのペースト環境などで有効)
             try {
-                canvas.toBlob(async (blob) => {
+                const range = document.createRange();
+                range.selectNode(imgElement);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+                success = document.execCommand('copy');
+                selection.removeAllRanges();
+            } catch (err) {
+                console.warn("Fallback copy failed:", err);
+            }
+
+            // 古い仕組みが失敗した場合はClipboard APIを試す
+            if (!success && navigator.clipboard && navigator.clipboard.write) {
+                try {
+                    const response = await fetch(imgElement.src);
+                    const blob = await response.blob();
                     const item = new ClipboardItem({ "image/png": blob });
                     await navigator.clipboard.write([item]);
-                    
-                    const toast = document.getElementById('toast');
-                    toast.innerText = "画像をコピーしました！";
-                    showToast();
-                    setTimeout(() => { toast.innerText = "コピーしました！"; }, 2000);
-                });
-            } catch (err) {
-                console.error("Failed to copy image: ", err);
-                alert("お使いのブラウザは画像のコピーに対応していない可能性があります。保存（ダウンロード）をご利用ください。");
+                    success = true;
+                } catch (err) {
+                    console.warn("Clipboard API failed:", err);
+                }
+            }
+
+            if (success) {
+                showToastMessage("画像をコピーしました！");
+            } else {
+                showToastMessage("制限によりコピーできません。画像を長押し（右クリック）してください", true);
             }
         }
 
         function downloadWhiteImage() {
-            const canvas = document.getElementById('whiteImageCanvas');
-            const link = document.createElement('a');
-            link.download = 'white_image_1x1.png';
-            link.href = canvas.toDataURL('image/png');
-            link.click();
+            const imgElement = document.getElementById('whiteImageElement');
+            try {
+                const link = document.createElement('a');
+                link.download = 'white_image_1x1.png';
+                link.href = imgElement.src;
+                // Notion環境だと_blankや直接のclickが弾かれることがあるが、可能な範囲で実行
+                link.click();
+                showToastMessage("ダウンロードを開始しました");
+            } catch (err) {
+                console.error("Failed to download image: ", err);
+                showToastMessage("制限により保存できません。画像を長押し（右クリック）してください", true);
+            }
         }
 
-        function showToast() {
+        let toastTimeout;
+        function showToastMessage(msg, isError = false) {
             const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            
+            if (isError) {
+                toast.classList.remove('bg-slate-900');
+                toast.classList.add('bg-rose-600');
+            } else {
+                toast.classList.remove('bg-rose-600');
+                toast.classList.add('bg-slate-900');
+            }
+            
             toast.style.opacity = '1';
-            setTimeout(() => {
+            
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
                 toast.style.opacity = '0';
-            }, 2000);
+            }, 3000);
         }
 
         function filterCards(category) {
