@@ -72,9 +72,21 @@
             <div class="prompt-card bg-white p-6 rounded-xl border border-slate-200 flex flex-col justify-between" data-category="flat">
                 <div>
                     <div class="flex justify-between items-start mb-6">
-                        <span class="bg-blue-100 text-blue-700 text-base font-bold px-3 py-1 rounded uppercase tracking-wide">線画（平絵）作成</span>
+                        <div class="flex flex-wrap items-center gap-3">
+                            <span class="bg-blue-100 text-blue-700 text-base font-bold px-3 py-1 rounded uppercase tracking-wide">線画（平絵）作成</span>
+                            <div class="flex bg-slate-100 rounded-lg p-1">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="flat-type" value="bw" class="peer sr-only" onchange="updateSpecificPrompt('flat')" checked>
+                                    <div class="px-3 py-1 text-xs font-medium rounded-md text-slate-500 peer-checked:bg-white peer-checked:text-blue-600 peer-checked:shadow-sm transition-all">白黒</div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="flat-type" value="color" class="peer sr-only" onchange="updateSpecificPrompt('flat')">
+                                    <div class="px-3 py-1 text-xs font-medium rounded-md text-slate-500 peer-checked:bg-white peer-checked:text-blue-600 peer-checked:shadow-sm transition-all">カラー</div>
+                                </label>
+                            </div>
+                        </div>
                         <!-- T-shirt Icon -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-400 shrink-0 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 4L4 7V10H6V20H18V10H20V7L17 4H14C14 5.10457 13.1046 6 12 6C10.8954 6 10 5.10457 10 4H7Z" />
                         </svg>
                     </div>
@@ -468,25 +480,28 @@
         };
 
         const PROMPTS = {
-            flat: `アップロードされた衣服の画像を、プロフェッショナルなテクニカルフラット（仕様書用平絵）に変換してください。衣服の素材に応じてステッチの表現を自動的に調整すること。
+            flat: `アップロードされた衣服の画像を、プロフェッショナルなテクニカルフラット（仕様書用平絵）に変換してください。
 【描画スタイル】
-Adobe Illustratorで作成されたような、精密で均一な太さの黒いベクター線画。
+[COLOR_STYLE]
 背景は純粋な白（#FFFFFF）。シェーディング、テクスチャ、影、グラデーションは一切排除すること。
 人間やマネキンは含めず、服単体の平置き（フラット）状態を描写すること。
-【素材に基づくディテールの指示（最重要）】
+【ステッチ（点線）に関する厳格なルール】
+- 縫製（ステッチ）を表す点線は、実際の衣服で通常縫われる箇所（裾、袖口、襟ぐり、ポケット周り、主要な切り替えシーム）のみに最小限に配置すること。
+- **衣服の輪郭（アウトライン）、シワ、折り目、縫製がないデザインラインには、絶対に点線を描写しないこと。これらはすべて実線で描くこと。**
+- 過剰な点線や、不要なステッチ表現は厳禁。
+【素材に基づくディテールの指示】
 アップロードされた衣服が**【ニットアイテム（セーター、カーディガン、ニットシャツ, ポロシャツなど）】**の場合:
-ダブルトップステッチ（点線）は適用せず、すべてのシーム、裾、袖口はクリーンな実線のみで描写する。
+ステッチ（点線）は一切適用せず、すべてのシーム、裾、袖口はクリーンな実線のみで描写する。
 編み目のテクスチャは省略し、クリーンな形のみを維持する。
 カーディガンの場合は、ボタンを詳細に線画で描く。
 アップロードされた衣服が**【織物アイテム（ジャケット、フーディー、シャツ, パンツ, デニム, Tシャツなど）】**の場合:
-すべてのエッジ、裾、袖口、該当するシームに、サンプル画像のような「細かい点線のダブルステッチ」を正確に描写する。
-ジッパー、ボタン、トグル、アイレットを詳細にレンダリングする。
+必要な箇所にのみ、適度な細かい点線のステッチを描写する。
 【その他のパーツと全体の指示】
-衣服のパネル構造、切り替え線、継ぎ目をすべて正確な線で表現すること。
+衣服のパネル構造、切り替え線、継ぎ目をすべて正確な実線で表現すること。
 ジッパーの歯、プルタブ、ボタン、ドローコード、ストッパー、アイレットなどの付属品は、ミニマルかつ詳細に線画で描くこと。
 画像中央に配置し、完全な左右対称（正面の場合）、または正確なプロポーションで描くこと。
 ロゴやタグが元画像にある場合は、その位置と形状をクリーンな線画として維持すること。
-ミニマリズムを徹底し、製造仕様書としてそのまま使えるクオリティで出力すること品質。`,
+ミニマリズムを徹底し、製造仕様書としてそのまま使えるクオリティで出力すること。`,
             product: `アップロードされた人物画像に基づき、その着用している衣服単体のプロフェッショナルな平置き（Flat Lay）商品画像を作成してください。
 【全体のスタイルと背景】
 人物、マネキン、または着用に関連するすべての要素（頭、腕、脚、靴など）を完全に排除すること。
@@ -645,6 +660,14 @@ Adobe Illustratorで作成されたような、精密で高品質なベクター
             
             let basePrompt = PROMPTS[type];
 
+            if (type === 'flat') {
+                const flatType = document.querySelector('input[name="flat-type"]:checked')?.value || 'bw';
+                const bwStyle = "Adobe Illustratorで作成されたような、精密で均一な太さの黒いベクター線画。\n衣服自体には一切色をつけず、白と黒の線のみで表現された純粋な線画イラスト（塗りつぶしなし）にすること。";
+                const colorStyle = "Adobe Illustratorで作成されたような、精密で均一な太さの黒いベクター線画。\nアップロードされたメインイメージの衣服のカラーを抽出し、影やグラデーションのない単色のベタ塗り（フラットカラー）で元の画像の色合いを忠実に再現すること。";
+                
+                basePrompt = basePrompt.replace('[COLOR_STYLE]', flatType === 'bw' ? bwStyle : colorStyle);
+            }
+
             if (type === 'pattern') {
                 const getValues = (cat) => {
                     const selected = Array.from(document.querySelectorAll(`.pattern-tag.selected[data-category="${cat}"]`)).map(b => b.innerText);
@@ -698,6 +721,10 @@ Adobe Illustratorで作成されたような、精密で高品質なベクター
         function resetPrompt(type) {
             if (type === 'pattern') {
                 resetPatternTags();
+            }
+            if (type === 'flat') {
+                const radioBw = document.querySelector('input[name="flat-type"][value="bw"]');
+                if (radioBw) radioBw.checked = true;
             }
             updateSpecificPrompt(type);
             showToastMessage("リセットしました");
