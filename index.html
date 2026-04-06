@@ -800,38 +800,42 @@ Adobe Illustratorで作成されたような、精密で高品質なベクター
 
         async function copyWhiteImage() {
             const imgElement = document.getElementById('whiteImageElement');
-            let success = false;
 
-            // テキストと同じ仕組みで画像要素をコピー (Notionのペースト環境などで有効)
+            try {
+                // まず最新の Clipboard API を最優先で試行する
+                if (navigator.clipboard && navigator.clipboard.write) {
+                    const response = await fetch(imgElement.src);
+                    const blob = await response.blob();
+                    const item = new ClipboardItem({ "image/png": blob });
+                    await navigator.clipboard.write([item]);
+                    showToastMessage("画像をコピーしました！");
+                    return;
+                }
+            } catch (err) {
+                console.warn("Clipboard API failed:", err);
+                // Notionなどのiframe環境で権限がブロックされた場合
+                showToastMessage("制限によりコピーできません。画像を右クリックしてコピーしてください", true);
+                return;
+            }
+
+            // Clipboard API がそもそも存在しない古いブラウザ向けのフォールバック
             try {
                 const range = document.createRange();
                 range.selectNode(imgElement);
                 const selection = window.getSelection();
                 selection.removeAllRanges();
                 selection.addRange(range);
-                success = document.execCommand('copy');
+                const success = document.execCommand('copy');
                 selection.removeAllRanges();
+                
+                if (success) {
+                    showToastMessage("画像をコピーしました！");
+                } else {
+                    showToastMessage("画像を右クリック（スマホは長押し）してコピーしてください", true);
+                }
             } catch (err) {
                 console.warn("Fallback copy failed:", err);
-            }
-
-            // 古い仕組みが失敗した場合はClipboard APIを試す
-            if (!success && navigator.clipboard && navigator.clipboard.write) {
-                try {
-                    const response = await fetch(imgElement.src);
-                    const blob = await response.blob();
-                    const item = new ClipboardItem({ "image/png": blob });
-                    await navigator.clipboard.write([item]);
-                    success = true;
-                } catch (err) {
-                    console.warn("Clipboard API failed:", err);
-                }
-            }
-
-            if (success) {
-                showToastMessage("画像をコピーしました！");
-            } else {
-                showToastMessage("制限によりコピーできません。画像を長押し（右クリック）してください", true);
+                showToastMessage("画像を右クリック（スマホは長押し）してコピーしてください", true);
             }
         }
 
